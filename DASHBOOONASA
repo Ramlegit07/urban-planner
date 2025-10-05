@@ -1,0 +1,310 @@
+diff
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Town Planning Platform</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; padding:0;}
+    header, footer {background:#004d99; color:white; padding:15px 20px;}
+    nav a {color:white; margin-right:15px; text-decoration:none; font-weight:bold;}
+    section {padding:40px 20px;}
+    h2 {color:#004d99;}
+    .cards {display:flex; flex-wrap:wrap; gap:20px;}
+    .card {background:#f1f1f1; padding:20px; border-radius:10px; flex:1 1 300px;}
+    .button {background:#004d99; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;}
+    footer {text-align:center;}
+
+    /* Map full screen overlay */
+    #mapView { display:none; height:100vh; width:100vw; position:fixed; top:0; left:0; z-index:1000; background:white; }
+    #container { display:flex; height:100%; width:100%; }
+    #sidebar {
+      width:300px; background:#f9f9f9; border-right:1px solid #ccc;
+      padding:10px; display:flex; flex-direction:column; box-sizing:border-box;
+    }
+    #sidebar h2 { margin:0 0 10px; font-size:18px; }
+    #searchBox {
+      padding:8px; width:100%; border:1px solid #999; border-radius:5px;
+      margin-bottom:5px; box-sizing:border-box;
+    }
+    #searchButton, #backButton {
+      padding:8px 12px; border:none; border-radius:5px; background:#007bff;
+      color:white; cursor:pointer; margin-bottom:10px;
+    }
+    #results { flex:1; width:100%; }
+    #map { flex:1; height:100%; width:100%; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Smart Town Planning Platform</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#map">City Map</a>
+      <a href="#ideas">Ideas & Voting</a>
+      <a href="#issues">Report Issues</a>
+      <a href="#dashboard">Sustainability</a>
+      <a href="#simulation">Simulation</a>
+      <a href="#volunteer">Volunteer</a>
+      <a href="#forum">Community Forum</a>
+    </nav>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home">
+    <h2>Welcome to Our City Planning Platform</h2>
+    <p>Engage, contribute, and shape the future of your town. Explore projects, submit ideas, report issues, and track sustainability metrics.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Submit an Idea</h3>
+        <p>Share your suggestions for better urban development.</p>
+        <button class="button">Submit Idea</button>
+      </div>
+      <div class="card">
+        <h3>Report an Issue</h3>
+        <p>Notify authorities about potholes, garbage overflow, or broken streetlights.</p>
+        <button class="button">Report Now</button>
+      </div>
+      <div class="card">
+        <h3>Explore City Map</h3>
+        <p>Check out facilities, traffic, green zones, and ongoing projects.</p>
+        <button class="button" onclick="openMap()">View Map</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ideas & Voting Section -->
+  <section id="ideas">
+    <h2>Ideas & Voting Portal</h2>
+    <p>Submit your ideas, upvote popular proposals, and comment on city initiatives.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Submit Idea</h3>
+        <form>
+          <input type="text" placeholder="Idea Title" required><br><br>
+          <textarea placeholder="Describe your idea..." required></textarea><br><br>
+          <button type="submit" class="button">Submit</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Vote on Ideas</h3>
+        <p>Upvote or comment on other citizens' proposals.</p>
+        <button class="button">View Ideas</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Reporting Section -->
+  <section id="issues">
+    <h2>Report Civic Issues</h2>
+    <p>Help improve the city by reporting potholes, broken streetlights, or garbage overflow.</p>
+    <form>
+      <select required>
+        <option value="">Select Issue Type</option>
+        <option>Pothole</option>
+        <option>Streetlight</option>
+        <option>Garbage Overflow</option>
+        <option>Water Leakage</option>
+        <option>Noise Complaint</option>
+        <option>Other</option>
+      </select><br><br>
+      <input type="text" placeholder="Location / Address" required><br><br>
+      <input type="file"><br><br>
+      <textarea placeholder="Description (optional)"></textarea><br><br>
+      <button type="submit" class="button">Report Issue</button>
+    </form>
+  </section>
+
+  <!-- Sustainability Dashboard Section -->
+  <section id="dashboard">
+    <h2>Sustainability & Civic Dashboard</h2>
+    <p>Track environmental metrics, green initiatives, and neighborhood comparisons.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Air Quality</h3>
+        <p>Current AQI: 85 (Moderate)</p>
+      </div>
+      <div class="card">
+        <h3>Water Usage</h3>
+        <p>Neighborhood average: 150 L/person/day</p>
+      </div>
+      <div class="card">
+        <h3>Waste Management</h3>
+        <p>Garbage collected today: 2.5 tons</p>
+      </div>
+      <div class="card">
+        <h3>Green Points</h3>
+        <p>Top neighborhoods earning sustainability points</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Urban Simulation Section -->
+  <section id="simulation">
+    <h2>Urban Simulation / What-If Tool</h2>
+    <p>Visualize the impact of new roads, parks, or infrastructure projects before implementation.</p>
+    <button class="button">Launch Simulation</button>
+  </section>
+
+  <!-- Volunteer Section -->
+  <section id="volunteer">
+    <h2>Volunteer & Community Participation</h2>
+    <p>Join city initiatives like tree plantation, cleanliness drives, and awareness campaigns.</p>
+    <form>
+      <input type="text" placeholder="Name" required><br><br>
+      <input type="email" placeholder="Email" required><br><br>
+      <select required>
+        <option value="">Select Event</option>
+        <option>Tree Plantation</option>
+        <option>Cleanliness Drive</option>
+        <option>Awareness Campaign</option>
+      </select><br><br>
+      <button type="submit" class="button">Register</button>
+    </form>
+  </section>
+
+  <!-- Community Forum Section -->
+  <section id="forum">
+    <h2>Community Forum</h2>
+    <p>Discuss local issues, participate in polls, and collaborate with neighbors.</p>
+    <button class="button">Visit Forum</button>
+  </section>
+
+  <!-- Map Fullscreen Overlay -->
+  <div id="mapView">
+    <div id="container">
+      <div id="sidebar">
+        <h2>Urban Cities in India</h2>
+        <input type="text" id="searchBox" placeholder="Search for a city/locality...">
+        <button id="searchButton">Search</button>
+        <button id="backButton" onclick="closeMap()">Back to Dashboard</button>
+        <select id="results" size="8" style="display:none;"></select>
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Smart Town Planning Platform | Contact: info@smartcity.com</p>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    let map, currentLayer, currentSearchMarker;
+    let lastResults = []; // store last search results
+
+    function openMap() {
+      document.getElementById("mapView").style.display = "block";
+      // Reset map container and search
+      document.getElementById("map").innerHTML = "";
+      document.getElementById("searchBox").value = "";
+      document.getElementById("results").innerHTML = "";
+      document.getElementById("results").style.display = "none";
+      lastResults = []; // clear old results when reopening
+
+      // Initialize map
+      map = L.map("map").setView([20.5937, 78.9629], 5);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+      }).addTo(map);
+    }
+
+    function closeMap() {
+      document.getElementById("mapView").style.display = "none";
+      if (map) {
+        map.remove();
+        map = null;
+        currentLayer = null;
+        currentSearchMarker = null;
+      }
+    }
+
+    function searchCity() {
+      const query = document.getElementById("searchBox").value.trim();
+      const resultsSelect = document.getElementById("results");
+
+      if (!query) {
+        resultsSelect.innerHTML = "";
+        resultsSelect.style.display = "none";
+        lastResults = [];
+        return;
+      }
+
+      fetch(`https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(query)}&country=India&format=json&polygon_geojson=1&addressdetails=1`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            alert("City not found in India!");
+            return;
+          }
+
+          resultsSelect.innerHTML = "";
+          lastResults = data;
+
+          data.forEach((item, index) => {
+            const opt = document.createElement("option");
+            opt.value = index;
+            opt.textContent = item.display_name;
+            resultsSelect.appendChild(opt);
+          });
+          resultsSelect.style.display = "block";
+
+          resultsSelect.onchange = function() {
+            const selected = data[this.value];
+            const lat = selected.lat, lon = selected.lon;
+
+            if (currentLayer) map.removeLayer(currentLayer);
+            if (currentSearchMarker) map.removeLayer(currentSearchMarker);
+
+            // Fixed zoom level for better consistency
+            map.setView([lat, lon], 13);
+
+            if (selected.geojson) {
+              currentLayer = L.geoJSON(selected.geojson, {
+                style: { color: "blue", weight: 2, fillColor: "orange", fillOpacity: 0.4 }
+              }).addTo(map);
+            }
+
+            currentSearchMarker = L.marker([lat, lon]).addTo(map)
+              .bindPopup("<b>" + selected.display_name + "</b>").openPopup();
+
+            resultsSelect.style.display = "none";
+          };
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Error fetching data!");
+        });
+    }
+
+    document.getElementById("searchButton").addEventListener("click", searchCity);
+
+    document.getElementById("searchBox").addEventListener("focus", function() {
+      if (lastResults.length > 0) {
+        const resultsSelect = document.getElementById("results");
+        resultsSelect.innerHTML = "";
+        lastResults.forEach((item, index) => {
+          const opt = document.createElement("option");
+          opt.value = index;
+          opt.textContent = item.display_name;
+          resultsSelect.appendChild(opt);
+        });
+        resultsSelect.style.display = "block";
+      }
+    });
+
+    document.getElementById("searchBox").addEventListener("input", function() {
+      if (this.value.trim() === "") {
+        document.getElementById("results").innerHTML = "";
+        document.getElementById("results").style.display = "none";
+        lastResults = [];
+      }
+    });
+  </script>
+</body>
+</html>
